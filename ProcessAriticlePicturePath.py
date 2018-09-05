@@ -8,20 +8,27 @@ class Article:
         self.dir = name.strip('.md')
         print(self.name)
         print(self.dir)
-    
-    def 
+
     def run(self):
         f = open(self.name, 'r', encoding='UTF-8')
         f_new = open(self.name + '.new', 'w', encoding='UTF-8')
 
-        lines = f.readline()
+        lines = f.readlines()
         for line in lines:
-            if re.match(r'![*]()', line)
-
-# content.replace()
-# print(content)
-# f.close()
-
+            picture_path = re.findall(r'!\[.{0,100}\]\(.{0,10000}\)', line)
+            print(line)
+            # if not line:
+            #     print('none')
+            if picture_path:
+                picture_path = picture_path[0]
+                # print(picture_path)
+                new_path = picture_path[0 : picture_path.index('(') + 1] + picture_path[picture_path.index(self.dir) : ] + '\r\n'
+                #print(new_path)
+                f_new.write(new_path)
+            else:
+                f_new.write(line)
+        f.close()
+        f_new.close()
 
 def main():
     article_list = []
